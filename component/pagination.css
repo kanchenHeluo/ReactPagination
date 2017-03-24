@@ -12,16 +12,8 @@
     -webkit-padding-start: 40px;
 }
 
-
 .pagination>li {
     display: inline;
-}
-
-.pagination>li.disabled{
-    color: #999;
-    background-color: #fff;
-    border-color: #ddd;
-    cursor: not-allowed;
 }
 
 .pagination>li>a{
@@ -40,6 +32,12 @@
     cursor: pointer;
 }
 
+.pagination>li>a.disabled{
+    color: #999;
+    background-color: #fff;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
 
 .pagination>li>a.active{
     background-color: #1890C0;

@@ -111,9 +111,9 @@ class Pagination extends React.Component {
     const nextClassName = this.state.currentPage === this.props.pageCount ? styles.disabled : '';
     return ( 
         <ul className={styles.pagination}>
-          <li className={previousClassName}><a onClick={this.pageUp}>&laquo;</a></li>
+          <li><a className={previousClassName} onClick={this.pageUp}>&laquo;</a></li>
           {this.renderPages()}
-          <li className={nextClassName}><a onClick={this.pageDown}>&raquo;</a></li>
+          <li><a className={nextClassName} onClick={this.pageDown}>&raquo;</a></li>
         </ul>
     );
   }
