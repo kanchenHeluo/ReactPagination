@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
-	entry: './main.js',
+	entry: './Main.jsx',
 	output:{
 		path:'/',
 		filename:'index.js'
@@ -12,8 +12,16 @@ var config = {
 		port:8888
 	},
 	devtool: 'source-map',
-	module: {
-		loaders:[
+	module: {		
+		rules:[		
+			{
+				test: /\.jsx$/,
+				exclude: /node_modules/,
+				enforce: 'pre',
+				use:[
+					'eslint-loader',
+				]
+			},
 			{
 				test: /\.jsx?$/,
 				exclude: /node_modules/,
@@ -41,7 +49,10 @@ var config = {
 	      }
 	    })
 		*/
-	]
+	],
+	resolve:{
+		extensions:['.js','.jsx']
+	}
 };
 
 module.exports = config;
