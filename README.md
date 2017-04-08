@@ -1,5 +1,6 @@
 # ReactPagination
-Description:react pagination component demo with webpack, es6
+
+Descriptions: react pagination component demo with webpack, es6
 
 Commands:
 Install: npm install
