@@ -13,7 +13,8 @@ var config = {
 	},
 	devtool: 'source-map',
 	module: {		
-		rules:[		
+		rules:[	
+		/*	
 			{
 				test: /\.jsx$/,
 				exclude: /node_modules/,
@@ -21,7 +22,7 @@ var config = {
 				use:[
 					'eslint-loader',
 				]
-			},
+			},*/
 			{
 				test: /\.jsx?$/,
 				exclude: /node_modules/,

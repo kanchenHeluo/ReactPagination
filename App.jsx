@@ -1,5 +1,6 @@
 import React from 'react';
 import Pagination from './Component/Pagination';
+import 'whatwg-fetch';
 
 class App extends React.Component{
 	constructor(props) {
@@ -9,7 +10,7 @@ class App extends React.Component{
 			pageSize: 5,
 			pageCount: 12
 		};
-		this.getFileList = this.getFileList.bind(this);	
+		this.loadFileList = this.loadFileList.bind(this);	
 		this.reLoadFileList = this.reLoadFileList.bind(this);	
 	}
 
@@ -17,19 +18,35 @@ class App extends React.Component{
 		this.reLoadFileList();
 	}
 
-	getFileList(pageIdx, pageSize){
-		const fl = [];
-		for(let i=0; i<pageSize; i++){
-			fl[i] = (pageIdx-1)*pageSize + i + 1;
-		}
-		this.setState({fileList: fl});		
+	componentDidMount(){
+		this.loadFileList(1,this.state.pageSize);
+	}
+
+	loadFileList(pageIdx, pageSize){
+		fetch('http://localhost:8081/filelist', {
+			method: 'get',
+			mode: 'cors'
+		}).then(function(resp){
+			return resp.json();	
+		}).then(function(json){			
+			var ret = JSON.parse(json)['data'].map(a => a.content);
+			const fl = [];
+			const len = ret.length;
+			var index=0;
+			for(let i=(pageIdx-1)*pageSize; i<pageIdx*pageSize && len; i++){
+				fl[index++] = ret[i];
+			}
+			this.setState({fileList: fl});
+			this.setState({pageCount: Math.ceil(len/this.state.pageSize)})
+
+		}.bind(this));		
 	}
 
 	reLoadFileList(){		
 		if (this.pagination !== undefined) {
 			this.pagination.initCurrentPage(1);
 		}
-		this.getFileList(1,5);
+		this.loadFileList(1,this.state.pageSize);
 	}
 
 	renderFileList(){
@@ -41,7 +58,7 @@ class App extends React.Component{
 			<div>
 				<input type="button" value="reload" onClick={this.reLoadFileList}/>
 				{this.renderFileList()}
-				<Pagination ref={(c) => {this.pagination = c;}} pageSize={this.state.pageSize} pageCount={this.state.pageCount} onPageChange={this.getFileList}/>
+				<Pagination ref={(c) => {this.pagination = c;}} pageSize={this.state.pageSize} pageCount={this.state.pageCount} onPageChange={this.loadFileList}/>
 			</div>
 		);
 	}
